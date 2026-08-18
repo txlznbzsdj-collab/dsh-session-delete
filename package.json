@@ -1,0 +1,29 @@
+{
+  "name": "dsh-session-delete",
+  "version": "0.1.0",
+  "description": "在 DSH Web 侧边栏会话列表的三点下拉菜单底部添加「删除」项，点击后二次确认，硬删除会话数据。",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "scripts": {},
+  "dependencies": {},
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "license": "MIT"
+}
