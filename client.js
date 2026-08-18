@@ -199,6 +199,7 @@ window.__ModuleLoader__.load({
 			cancel.type = "button";
 			cancel.className = "dsh-session-delete-btn";
 			cancel.textContent = "取消";
+			cancel.setAttribute("aria-label", "取消删除会话");
 			cancel.addEventListener("click", function (e) {
 				if (e && e.stopPropagation) e.stopPropagation();
 				closeOverlay(overlay);
@@ -208,6 +209,7 @@ window.__ModuleLoader__.load({
 			del.type = "button";
 			del.className = "dsh-session-delete-btn dsh-session-delete-danger-btn";
 			del.textContent = "删除";
+			del.setAttribute("aria-label", "确认删除会话");
 			del.addEventListener("click", function (e) {
 				if (e && e.stopPropagation) e.stopPropagation();
 				del.disabled = true;
