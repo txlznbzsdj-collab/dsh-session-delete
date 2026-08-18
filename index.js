@@ -147,8 +147,10 @@ function mount(ctx) {
 		}
 
 		if (!live && !persisted) {
+			ctx.logger.warn(`[dsh-session-delete] nothing deleted for "${sessionId}" (not live, not persisted)`);
 			return { ok: false, live: false, persisted: false, message: `session not found: ${sessionId}` };
 		}
+		ctx.logger.info(`[dsh-session-delete] deleted "${sessionId}" (live=${live}, persisted=${persisted})`);
 		return { ok: true, live, persisted, message: "deleted" };
 	}
 
