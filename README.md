@@ -34,3 +34,18 @@
 - host 端点 `/plugins/dsh-session-delete/delete` 仅允许本机回环地址访问，并校验 Origin，防止跨站调用。
 - 依赖 DSH 内部会话存储（`ctx.sessions.store`）与持久化服务（`ctx.sessionPersistence`）。若 DSH 后续升级改变这些内部结构，可能需要相应适配。
 - 「删除」是硬删除，不可恢复，请谨慎使用。
+
+## 开发 / 验证
+
+本地改完 `client.js` 后**无需重启 GUI**（host 端 `index.js` 不变时），浏览器硬刷新（Ctrl+Shift+R）即加载新版。
+
+端到端验证用 `verify/` 下的 CDP 脚本：
+
+```bash
+# 用 --remote-debugging-port=9222 启动 Chrome 并打开 GUI，然后：
+npm run verify
+```
+
+## 提交到 awesome-dsh-plugin
+
+本插件符合 [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin) 收录要求：仓库 `package.json` 声明了 `dsh.bundle` manifest，`cordis.patch.yml` 提供了 loader 注入项，且为真实可用代码。
