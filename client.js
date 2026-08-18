@@ -23,6 +23,17 @@ window.__ModuleLoader__.load({
 		var DELETE_ENDPOINT = "/plugins/dsh-session-delete/delete";
 		var pendingSession = null; // { id, title }
 
+		// 官方主题变量集中表（已对照 design-platform.css 核对真实存在）。
+		// 改这里即可统一调整配色，无需散落在 CSS 字符串里。
+		var THEME = {
+			dialogBg: "var(--dsw-alias-bg-layer-2, #ffffff)",
+			text: "var(--dsw-alias-label-primary, #1f1f1f)",
+			border: "var(--dsw-alias-border-l2, #e5e5e5)",
+			error: "var(--dsw-alias-state-error-primary, #e5484d)",
+			hover: "var(--dsw-alias-interactive-bg-hover, rgba(0,0,0,.06))",
+			toastBg: "var(--dsw-alias-bg-layer-2, #111)"
+		};
+
 		// ── 从会话行 React fiber 里读 session id（与 UI 版本无关，靠 fiber 属性） ──
 		function readSessionId(row) {
 			if (!row) return undefined;
@@ -307,20 +318,20 @@ window.__ModuleLoader__.load({
 			var style = document.createElement("style");
 			style.textContent = [
 				".dsh-session-delete-overlay{position:fixed;inset:0;z-index:2147483600;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;animation:dshSdFade .15s ease}",
-				".dsh-session-delete-dialog{background:var(--dsw-alias-bg-layer-2,#ffffff);color:var(--dsw-alias-label-primary,#1f1f1f);border:1px solid var(--dsw-alias-border-l2,#e5e5e5);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.28);width:340px;max-width:calc(100vw - 40px);padding:18px 20px}",
-				".dsh-session-delete-title{margin:0 0 10px;font-size:16px;line-height:22px;font-weight:600;color:var(--dsw-alias-label-primary,#1f1f1f)}",
-				".dsh-session-delete-text{margin:0;font-size:14px;line-height:20px;word-break:break-all;color:var(--dsw-alias-label-primary,#1f1f1f)}",
-				".dsh-session-delete-warn{margin:8px 0 0;font-size:12px;line-height:18px;color:var(--dsw-alias-state-error-primary,#e5484d)}",
+				".dsh-session-delete-dialog{background:" + THEME.dialogBg + ";color:" + THEME.text + ";border:1px solid " + THEME.border + ";border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.28);width:340px;max-width:calc(100vw - 40px);padding:18px 20px}",
+				".dsh-session-delete-title{margin:0 0 10px;font-size:16px;line-height:22px;font-weight:600;color:" + THEME.text + "}",
+				".dsh-session-delete-text{margin:0;font-size:14px;line-height:20px;word-break:break-all;color:" + THEME.text + "}",
+				".dsh-session-delete-warn{margin:8px 0 0;font-size:12px;line-height:18px;color:" + THEME.error + "}",
 				".dsh-session-delete-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}",
-				".dsh-session-delete-btn{cursor:pointer;border:1px solid var(--dsw-alias-border-l2,#d5d5d5);background:transparent;color:var(--dsw-alias-label-primary,#1f1f1f);border-radius:8px;padding:6px 14px;font-size:13px;line-height:18px}",
-				".dsh-session-delete-btn:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(0,0,0,.06))}",
-				".dsh-session-delete-danger-btn{border-color:transparent;background:var(--dsw-alias-state-error-primary,#e5484d);color:#fff}",
+				".dsh-session-delete-btn{cursor:pointer;border:1px solid " + THEME.border + ";background:transparent;color:" + THEME.text + ";border-radius:8px;padding:6px 14px;font-size:13px;line-height:18px}",
+				".dsh-session-delete-btn:hover{background:" + THEME.hover + "}",
+				".dsh-session-delete-danger-btn{border-color:transparent;background:" + THEME.error + ";color:#fff}",
 				".dsh-session-delete-danger-btn:hover{filter:brightness(.92)}",
 				".dsh-session-delete-danger-btn:disabled{opacity:.6;cursor:default}",
-				".dsh-session-delete-danger{color:var(--dsw-alias-state-error-primary,#e5484d)}",
-				".dsh-session-delete-toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:all .2s ease;z-index:2147483700;background:var(--dsw-alias-bg-layer-2,#111);color:var(--dsw-alias-label-primary,#fff);border:1px solid var(--dsw-alias-border-l2,transparent);border-radius:8px;padding:9px 16px;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.3)}",
+				".dsh-session-delete-danger{color:" + THEME.error + "}",
+				".dsh-session-delete-toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:all .2s ease;z-index:2147483700;background:" + THEME.toastBg + ";color:" + THEME.text + ";border:1px solid " + THEME.border + ";border-radius:8px;padding:9px 16px;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.3)}",
 				".dsh-session-delete-toast-show{opacity:1;transform:translate(-50%,0)}",
-				".dsh-session-delete-toast-error{background:var(--dsw-alias-state-error-primary,#e5484d);color:#fff}",
+				".dsh-session-delete-toast-error{background:" + THEME.error + ";color:#fff}",
 				"@keyframes dshSdFade{from{opacity:0}to{opacity:1}}"
 			].join("\n");
 			document.head.appendChild(style);
