@@ -316,26 +316,44 @@ window.__ModuleLoader__.load({
 		// ── 样式：直接写官方主题变量 var(--dsw-*)（已核对真实存在），浏览器计算时
 		//   按当前亮/暗/皮肤主题自动解析，且切换主题即时生效，无需 JS 介入。
 		//   fallback 仅在最坏情况下兜底。
-		function injectStyle() {
-			var style = document.createElement("style");
-			style.textContent = [
+		// 基础层：布局/动画，与主题无关。
+		function baseCss() {
+			return [
 				".dsh-session-delete-overlay{position:fixed;inset:0;z-index:2147483600;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;animation:dshSdFade .15s ease}",
-				".dsh-session-delete-dialog{background:" + THEME.dialogBg + ";color:" + THEME.text + ";border:1px solid " + THEME.border + ";border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.28);width:340px;max-width:calc(100vw - 40px);padding:18px 20px}",
-				".dsh-session-delete-title{margin:0 0 10px;font-size:16px;line-height:22px;font-weight:600;color:" + THEME.text + "}",
-				".dsh-session-delete-text{margin:0;font-size:14px;line-height:20px;word-break:break-all;color:" + THEME.text + "}",
-				".dsh-session-delete-warn{margin:8px 0 0;font-size:12px;line-height:18px;color:" + THEME.error + "}",
+				".dsh-session-delete-dialog{border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.28);width:340px;max-width:calc(100vw - 40px);padding:18px 20px}",
+				".dsh-session-delete-title{margin:0 0 10px;font-size:16px;line-height:22px;font-weight:600}",
+				".dsh-session-delete-text{margin:0;font-size:14px;line-height:20px;word-break:break-all}",
+				".dsh-session-delete-warn{margin:8px 0 0;font-size:12px;line-height:18px}",
 				".dsh-session-delete-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}",
-				".dsh-session-delete-btn{cursor:pointer;border:1px solid " + THEME.border + ";background:transparent;color:" + THEME.text + ";border-radius:8px;padding:6px 14px;font-size:13px;line-height:18px}",
-				".dsh-session-delete-btn:hover{background:" + THEME.hover + "}",
-				".dsh-session-delete-danger-btn{border-color:transparent;background:" + THEME.error + ";color:#fff}",
+				".dsh-session-delete-btn{cursor:pointer;border:1px solid " + THEME.border + ";background:transparent;border-radius:8px;padding:6px 14px;font-size:13px;line-height:18px}",
+				".dsh-session-delete-danger-btn{border-color:transparent;color:#fff}",
 				".dsh-session-delete-danger-btn:hover{filter:brightness(.92)}",
 				".dsh-session-delete-danger-btn:disabled{opacity:.6;cursor:default}",
-				".dsh-session-delete-danger{color:" + THEME.error + "}",
-				".dsh-session-delete-toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:all .2s ease;z-index:2147483700;background:" + THEME.toastBg + ";color:" + THEME.text + ";border:1px solid " + THEME.border + ";border-radius:8px;padding:9px 16px;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.3)}",
+				".dsh-session-delete-toast{position:fixed;left:50%;bottom:32px;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:all .2s ease;z-index:2147483700;border-radius:8px;padding:9px 16px;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.3)}",
 				".dsh-session-delete-toast-show{opacity:1;transform:translate(-50%,0)}",
-				".dsh-session-delete-toast-error{background:" + THEME.error + ";color:#fff}",
 				"@keyframes dshSdFade{from{opacity:0}to{opacity:1}}"
-			].join("\n");
+			];
+		}
+
+		// 主题层：颜色，全部走官方 --dsw-* 变量（见 THEME 常量）。
+		function themeCss() {
+			return [
+				".dsh-session-delete-dialog{background:" + THEME.dialogBg + ";color:" + THEME.text + ";border:1px solid " + THEME.border + "}",
+				".dsh-session-delete-title{color:" + THEME.text + "}",
+				".dsh-session-delete-text{color:" + THEME.text + "}",
+				".dsh-session-delete-warn{color:" + THEME.error + "}",
+				".dsh-session-delete-btn{color:" + THEME.text + "}",
+				".dsh-session-delete-btn:hover{background:" + THEME.hover + "}",
+				".dsh-session-delete-danger-btn{background:" + THEME.error + "}",
+				".dsh-session-delete-danger{color:" + THEME.error + "}",
+				".dsh-session-delete-toast{background:" + THEME.toastBg + ";color:" + THEME.text + ";border:1px solid " + THEME.border + "}",
+				".dsh-session-delete-toast-error{background:" + THEME.error + ";color:#fff}"
+			];
+		}
+
+		function injectStyle() {
+			var style = document.createElement("style");
+			style.textContent = baseCss().concat(themeCss()).join("\n");
 			document.head.appendChild(style);
 		}
 
