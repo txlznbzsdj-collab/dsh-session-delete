@@ -1,0 +1,4 @@
+# 发布到 npm 时排除开发/验证资产
+verify/
+*.log
+.DS_Store
