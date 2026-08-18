@@ -15,7 +15,10 @@
     "cordis.patch.yml",
     "README.md"
   ],
-  "scripts": {},
+  "scripts": {
+    "verify": "node verify/inject-check.mjs",
+    "verify:cdp": "node verify/inject-check.mjs"
+  },
   "dependencies": {},
   "dsh": {
     "bundle": {
